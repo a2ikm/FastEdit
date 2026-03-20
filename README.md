@@ -18,10 +18,14 @@ A lightweight plain text editor for macOS.
 
 ## Build
 
-Open `FastEdit.xcodeproj` in Xcode and run (⌘R), or build from the command line:
+Open `FastEdit.xcodeproj` in Xcode and run (⌘R), or use Make:
 
 ```
-xcodebuild -scheme FastEdit -configuration Debug build
+make build      # Debug build
+make release    # Release build
+make install    # Release build + copy to /Applications
+make uninstall  # Remove from /Applications
+make clean      # Clean build artifacts
 ```
 
 ## License

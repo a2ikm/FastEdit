@@ -6,8 +6,19 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXContainerItemProxy section */
+		AABB00070000000000000007 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 69AB59612F6D8EBC00A979A5 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 69AB59682F6D8EBC00A979A5;
+			remoteInfo = FastEdit;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		69AB59692F6D8EBC00A979A5 /* FastEdit.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FastEdit.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		AABB00010000000000000001 /* FastEditTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FastEditTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -16,10 +27,22 @@
 			path = FastEdit;
 			sourceTree = "<group>";
 		};
+		AABB00020000000000000002 /* FastEditTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = FastEditTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		69AB59662F6D8EBC00A979A5 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AABB00040000000000000004 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -33,6 +56,7 @@
 			isa = PBXGroup;
 			children = (
 				69AB596B2F6D8EBC00A979A5 /* FastEdit */,
+				AABB00020000000000000002 /* FastEditTests */,
 				69AB596A2F6D8EBC00A979A5 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -41,6 +65,7 @@
 			isa = PBXGroup;
 			children = (
 				69AB59692F6D8EBC00A979A5 /* FastEdit.app */,
+				AABB00010000000000000001 /* FastEditTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -70,6 +95,29 @@
 			productReference = 69AB59692F6D8EBC00A979A5 /* FastEdit.app */;
 			productType = "com.apple.product-type.application";
 		};
+		AABB00060000000000000006 /* FastEditTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = AABB000B0000000000000011 /* Build configuration list for PBXNativeTarget "FastEditTests" */;
+			buildPhases = (
+				AABB00030000000000000003 /* Sources */,
+				AABB00040000000000000004 /* Frameworks */,
+				AABB00050000000000000005 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				AABB00080000000000000008 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				AABB00020000000000000002 /* FastEditTests */,
+			);
+			name = FastEditTests;
+			packageProductDependencies = (
+			);
+			productName = FastEditTests;
+			productReference = AABB00010000000000000001 /* FastEditTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -82,6 +130,10 @@
 				TargetAttributes = {
 					69AB59682F6D8EBC00A979A5 = {
 						CreatedOnToolsVersion = 26.3;
+					};
+					AABB00060000000000000006 = {
+						CreatedOnToolsVersion = 26.3;
+						TestTargetID = 69AB59682F6D8EBC00A979A5;
 					};
 				};
 			};
@@ -100,12 +152,20 @@
 			projectRoot = "";
 			targets = (
 				69AB59682F6D8EBC00A979A5 /* FastEdit */,
+				AABB00060000000000000006 /* FastEditTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		69AB59672F6D8EBC00A979A5 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		AABB00050000000000000005 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -122,7 +182,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		AABB00030000000000000003 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		AABB00080000000000000008 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 69AB59682F6D8EBC00A979A5 /* FastEdit */;
+			targetProxy = AABB00070000000000000007 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		69AB59752F6D8EBD00A979A5 /* Debug */ = {
@@ -313,6 +388,44 @@
 			};
 			name = Release;
 		};
+		AABB00090000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q75439Q8C6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = st.aerial.FastEditTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastEdit.app/Contents/MacOS/FastEdit";
+			};
+			name = Debug;
+		};
+		AABB0000000000000000000A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q75439Q8C6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = st.aerial.FastEditTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastEdit.app/Contents/MacOS/FastEdit";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -330,6 +443,15 @@
 			buildConfigurations = (
 				69AB59782F6D8EBD00A979A5 /* Debug */,
 				69AB59792F6D8EBD00A979A5 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		AABB000B0000000000000011 /* Build configuration list for PBXNativeTarget "FastEditTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				AABB00090000000000000009 /* Debug */,
+				AABB0000000000000000000A /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

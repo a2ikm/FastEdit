@@ -261,21 +261,15 @@ class FindBarViewController: NSViewController {
             textView.didChangeText()
         }
 
-        let delta = (replacement as NSString).length - matchRange.length
+        let replacementLength = (replacement as NSString).length
 
-        // Restore selection, adjusting for the length change
-        var newSelection = savedSelection
-        if matchRange.location + matchRange.length <= savedSelection.location {
-            // Match is entirely before the selection — shift by delta
-            newSelection.location += delta
-        } else if matchRange.location < savedSelection.location + savedSelection.length {
-            // Match overlaps the selection — adjust length
-            newSelection.length = max(0, newSelection.length + delta)
-        }
+        // Restore selection, adjusting for the replacement
+        let newSelection = adjustedSelection(savedSelection, afterReplacingRange: matchRange, replacementLength: replacementLength)
         textView.setSelectedRange(newSelection)
 
         // Adjust frozen selection range if needed
         if let frozen = frozenSelectionRange {
+            let delta = replacementLength - matchRange.length
             frozenSelectionRange = NSRange(location: frozen.location, length: frozen.length + delta)
         }
 
@@ -299,7 +293,7 @@ class FindBarViewController: NSViewController {
         textView.undoManager?.beginUndoGrouping()
 
         let pattern = searchField.stringValue
-        var selectionDelta = 0
+        var adjustedSel = savedSelection
 
         // Replace in reverse order to preserve ranges
         for match in matches.reversed() {
@@ -316,18 +310,12 @@ class FindBarViewController: NSViewController {
                 textView.didChangeText()
             }
 
-            // Track delta for matches before the selection
-            if match.range.location + match.range.length <= savedSelection.location {
-                selectionDelta += (replacement as NSString).length - match.range.length
-            }
+            adjustedSel = adjustedSelection(adjustedSel, afterReplacingRange: match.range, replacementLength: (replacement as NSString).length)
         }
 
         textView.undoManager?.endUndoGrouping()
 
-        // Restore selection, adjusted for all replacements before it
-        var newSelection = savedSelection
-        newSelection.location = max(0, newSelection.location + selectionDelta)
-        textView.setSelectedRange(newSelection)
+        textView.setSelectedRange(adjustedSel)
 
         delegate?.findBarSuppressSearchOnTextChange = false
 

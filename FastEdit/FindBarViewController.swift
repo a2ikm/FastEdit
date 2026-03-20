@@ -14,6 +14,8 @@ class FindBarViewController: NSViewController {
     private var replaceField: NSTextField!
     private var regexToggle: NSButton!
     private var caseToggle: NSButton!
+    private var prevButton: NSButton!
+    private var nextButton: NSButton!
     private var replaceButton: NSButton!
     private var replaceAllButton: NSButton!
     private var selectionToggle: NSButton!
@@ -83,6 +85,12 @@ class FindBarViewController: NSViewController {
         replaceField.translatesAutoresizingMaskIntoConstraints = false
         replaceField.setContentHuggingPriority(.defaultLow, for: .horizontal)
 
+        // Navigation buttons (replace mode only)
+        prevButton = makeButton(title: "<", toolTip: "Previous Match")
+        prevButton.action = #selector(previousMatch)
+        nextButton = makeButton(title: ">", toolTip: "Next Match")
+        nextButton.action = #selector(nextMatch)
+
         // Replace buttons
         replaceButton = makeButton(title: "Replace", toolTip: "Replace")
         replaceButton.action = #selector(replaceCurrent)
@@ -90,7 +98,7 @@ class FindBarViewController: NSViewController {
         replaceAllButton.action = #selector(replaceAll)
 
         // Replace row
-        replaceRow = NSStackView(views: [replaceField, replaceButton, replaceAllButton])
+        replaceRow = NSStackView(views: [replaceField, prevButton, nextButton, replaceButton, replaceAllButton])
         replaceRow.orientation = .horizontal
         replaceRow.spacing = 4
         replaceRow.translatesAutoresizingMaskIntoConstraints = false
@@ -186,6 +194,20 @@ class FindBarViewController: NSViewController {
 
     @objc private func toggleChanged(_ sender: NSButton) {
         performSearch()
+    }
+
+    @objc private func nextMatch() {
+        guard !matches.isEmpty else { return }
+        let index = ((currentMatchIndex ?? -1) + 1) % matches.count
+        currentMatchIndex = index
+        delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
+    }
+
+    @objc private func previousMatch() {
+        guard !matches.isEmpty else { return }
+        let index = ((currentMatchIndex ?? 1) - 1 + matches.count) % matches.count
+        currentMatchIndex = index
+        delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
     }
 
     @objc private func selectionToggleChanged(_ sender: NSButton) {

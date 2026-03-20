@@ -5,7 +5,7 @@ struct SearchOptions {
     var isCaseSensitive: Bool = true
 }
 
-class RegexSearchEngine {
+struct RegexSearchEngine {
     private func makeRegex(pattern: String, options: SearchOptions) throws -> NSRegularExpression {
         var regexOptions: NSRegularExpression.Options = []
         if !options.isCaseSensitive {

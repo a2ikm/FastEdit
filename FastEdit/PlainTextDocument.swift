@@ -6,6 +6,7 @@ class PlainTextDocument: NSDocument {
 
     nonisolated(unsafe) var text: String = ""
 
+    // Disabled to use custom save confirmation dialog (Save / Don't Save)
     nonisolated override class var autosavesInPlace: Bool { false }
 
     override func makeWindowControllers() {

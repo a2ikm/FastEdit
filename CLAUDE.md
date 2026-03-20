@@ -22,7 +22,6 @@ macOS 向けプレーンテキストエディタ。
 ## 設計上の注意点
 
 - **Swift Strict Concurrency** — `SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor` が有効。NSDocument の `autosavesInPlace`、`read(from:ofType:)`、`data(ofType:)` は `nonisolated` でオーバーライドが必要。`text` プロパティは `nonisolated(unsafe)` で宣言
-- **autosavesInPlace は false** — 閉じる時のカスタム保存確認ダイアログ（Save / Don't Save の2択）を実装するため無効化
 - **Storyboard の initialViewController は未設定** — ウィンドウ生成は NSDocumentController に委譲。設定するとドキュメント未紐付のウィンドウが表示される
 - **フォントは Osaka-Mono 14pt 固定**（将来的に設定画面から変更可能にする予定）
 - **検索メニューは `findAction:` セレクタ** — Storyboard の Find サブメニューは `performFindPanelAction:` ではなく `findAction:` を使用。NSTextView の標準 Find Bar と競合しないようにするため

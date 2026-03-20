@@ -97,10 +97,6 @@ class ViewController: NSViewController {
             showFindBar(replaceMode: false)
         case 12: // Find and Replace… (Cmd+Option+F)
             showFindBar(replaceMode: true)
-        case 2: // Find Next (Cmd+G)
-            findBarViewController?.nextMatch()
-        case 3: // Find Previous (Cmd+Shift+G)
-            findBarViewController?.previousMatch()
         case 7: // Use Selection for Find (Cmd+E)
             if let findBar = findBarViewController {
                 let selectedRange = textView.selectedRange()

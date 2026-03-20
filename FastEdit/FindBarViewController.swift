@@ -14,8 +14,6 @@ class FindBarViewController: NSViewController {
     private var replaceField: NSTextField!
     private var regexToggle: NSButton!
     private var caseToggle: NSButton!
-    private var prevButton: NSButton!
-    private var nextButton: NSButton!
     private var closeButton: NSButton!
     private var replaceButton: NSButton!
     private var replaceAllButton: NSButton!
@@ -35,8 +33,6 @@ class FindBarViewController: NSViewController {
     var isReplaceMode: Bool = false {
         didSet {
             replaceRow.isHidden = !isReplaceMode
-            prevButton.isHidden = isReplaceMode
-            nextButton.isHidden = isReplaceMode
         }
     }
 
@@ -74,19 +70,13 @@ class FindBarViewController: NSViewController {
         selectionToggle.state = .off
         selectionToggle.action = #selector(selectionToggleChanged(_:))
 
-        // Navigation buttons
-        prevButton = makeButton(title: "<", toolTip: "Previous Match")
-        prevButton.action = #selector(previousMatch)
-        nextButton = makeButton(title: ">", toolTip: "Next Match")
-        nextButton.action = #selector(nextMatch)
-
         // Close button
         closeButton = makeButton(title: "×", toolTip: "Close")
         closeButton.action = #selector(close)
 
         // Search row
         let searchRow = NSStackView(views: [
-            searchField, matchCountLabel, caseToggle, selectionToggle, regexToggle, prevButton, nextButton, closeButton,
+            searchField, matchCountLabel, caseToggle, selectionToggle, regexToggle, closeButton,
         ])
         searchRow.orientation = .horizontal
         searchRow.spacing = 4
@@ -203,22 +193,6 @@ class FindBarViewController: NSViewController {
         performSearch()
     }
 
-    @objc func nextMatch() {
-        guard !matches.isEmpty else { return }
-        let index = ((currentMatchIndex ?? -1) + 1) % matches.count
-        currentMatchIndex = index
-        scrollToMatch(at: index)
-        delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
-    }
-
-    @objc func previousMatch() {
-        guard !matches.isEmpty else { return }
-        let index = ((currentMatchIndex ?? 1) - 1 + matches.count) % matches.count
-        currentMatchIndex = index
-        scrollToMatch(at: index)
-        delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
-    }
-
     @objc private func close() {
         delegate?.findBarDidRequestClose()
     }
@@ -333,12 +307,6 @@ class FindBarViewController: NSViewController {
         )
     }
 
-    private func scrollToMatch(at index: Int) {
-        guard let textView = delegate?.findBarTextView, index < matches.count else { return }
-        let range = matches[index].range
-        textView.scrollRangeToVisible(range)
-    }
-
     private func updateMatchCountLabel() {
         let pattern = searchField.stringValue
         if pattern.isEmpty {
@@ -392,12 +360,6 @@ extension FindBarViewController: NSTextFieldDelegate {
         if commandSelector == #selector(cancelOperation(_:)) {
             delegate?.findBarDidRequestClose()
             return true
-        }
-        if commandSelector == #selector(insertNewline(_:)) {
-            if control === searchField {
-                nextMatch()
-                return true
-            }
         }
         return false
     }

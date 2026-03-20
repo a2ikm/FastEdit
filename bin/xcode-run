@@ -1,0 +1,11 @@
+#!/bin/bash
+# Send Cmd+R to the running Xcode to start a debug build.
+osascript -e '
+tell application "Xcode"
+    activate
+end tell
+delay 0.3
+tell application "System Events"
+    keystroke "r" using command down
+end tell
+'

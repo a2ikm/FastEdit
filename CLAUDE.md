@@ -38,3 +38,7 @@ macOS 向けプレーンテキストエディタ。
 ```
 xcodebuild -scheme FastEdit -configuration Debug build
 ```
+
+## 動作確認
+
+実装が完了して動作確認できる状態になったら `bin/xcode-run` を実行して Xcode でデバッグビルド＆実行する。

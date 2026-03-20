@@ -25,6 +25,7 @@ make build      # Debug build
 make release    # Release build
 make install    # Release build + copy to /Applications
 make uninstall  # Remove from /Applications
+make test       # Run unit tests
 make clean      # Clean build artifacts
 ```
 

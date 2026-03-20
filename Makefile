@@ -3,10 +3,13 @@ DERIVED_DATA = $(HOME)/Library/Developer/Xcode/DerivedData
 APP_NAME = FastEdit.app
 INSTALL_DIR = /Applications
 
-.PHONY: build release install uninstall clean
+.PHONY: build test release install uninstall clean
 
 build:
 	xcodebuild -scheme $(SCHEME) -configuration Debug build
+
+test:
+	xcodebuild test -scheme $(SCHEME) -destination 'platform=macOS'
 
 release:
 	xcodebuild -scheme $(SCHEME) -configuration Release build

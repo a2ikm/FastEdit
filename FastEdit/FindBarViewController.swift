@@ -14,7 +14,6 @@ class FindBarViewController: NSViewController {
     private var replaceField: NSTextField!
     private var regexToggle: NSButton!
     private var caseToggle: NSButton!
-    private var closeButton: NSButton!
     private var replaceButton: NSButton!
     private var replaceAllButton: NSButton!
     private var selectionToggle: NSButton!
@@ -70,13 +69,9 @@ class FindBarViewController: NSViewController {
         selectionToggle.state = .off
         selectionToggle.action = #selector(selectionToggleChanged(_:))
 
-        // Close button
-        closeButton = makeButton(title: "×", toolTip: "Close")
-        closeButton.action = #selector(close)
-
         // Search row
         let searchRow = NSStackView(views: [
-            searchField, matchCountLabel, caseToggle, selectionToggle, regexToggle, closeButton,
+            searchField, matchCountLabel, caseToggle, selectionToggle, regexToggle,
         ])
         searchRow.orientation = .horizontal
         searchRow.spacing = 4
@@ -191,10 +186,6 @@ class FindBarViewController: NSViewController {
 
     @objc private func toggleChanged(_ sender: NSButton) {
         performSearch()
-    }
-
-    @objc private func close() {
-        delegate?.findBarDidRequestClose()
     }
 
     @objc private func selectionToggleChanged(_ sender: NSButton) {

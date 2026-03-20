@@ -2,6 +2,8 @@ import AppKit
 
 class PlainTextDocument: NSDocument {
 
+    private static var cascadePoint: NSPoint = .zero
+
     nonisolated(unsafe) var text: String = ""
 
     nonisolated override class var autosavesInPlace: Bool { false }
@@ -12,6 +14,9 @@ class PlainTextDocument: NSDocument {
             withIdentifier: "DocumentWindowController"
         ) as! NSWindowController
         wc.window?.tabbingMode = .disallowed
+        if let window = wc.window {
+            Self.cascadePoint = window.cascadeTopLeft(from: Self.cascadePoint)
+        }
         addWindowController(wc)
     }
 

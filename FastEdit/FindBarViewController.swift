@@ -186,12 +186,6 @@ class FindBarViewController: NSViewController {
             }
 
             delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
-
-            // Only move text view selection when search field is not focused
-            let searchFieldFocused = searchField.currentEditor() != nil
-            if !searchFieldFocused, let index = currentMatchIndex {
-                selectMatch(at: index)
-            }
         } catch {
             matches = []
             currentMatchIndex = nil

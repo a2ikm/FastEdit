@@ -59,15 +59,15 @@ class FindBarViewController: NSViewController {
         matchCountLabel.setContentCompressionResistancePriority(.required, for: .horizontal)
 
         // Toggle buttons
-        regexToggle = makeToggleButton(title: ".*", toolTip: "Regular Expression")
+        regexToggle = makeButton(title: ".*", toolTip: "Regular Expression", isToggle: true)
         regexToggle.state = .on
         regexToggle.action = #selector(toggleChanged(_:))
 
-        caseToggle = makeToggleButton(title: "Aa", toolTip: "Case Sensitive")
+        caseToggle = makeButton(title: "Aa", toolTip: "Case Sensitive", isToggle: true)
         caseToggle.state = .off
         caseToggle.action = #selector(toggleChanged(_:))
 
-        selectionToggle = makeToggleButton(title: "⊏⊐", toolTip: "Find in Selection")
+        selectionToggle = makeButton(title: "⊏⊐", toolTip: "Find in Selection", isToggle: true)
         selectionToggle.state = .off
         selectionToggle.action = #selector(selectionToggleChanged(_:))
 
@@ -356,23 +356,11 @@ class FindBarViewController: NSViewController {
         }
     }
 
-    private func makeToggleButton(title: String, toolTip: String) -> NSButton {
+    private func makeButton(title: String, toolTip: String, isToggle: Bool = false) -> NSButton {
         let button = NSButton()
         button.title = title
         button.toolTip = toolTip
-        button.setButtonType(.pushOnPushOff)
-        button.bezelStyle = .recessed
-        button.refusesFirstResponder = true
-        button.target = self
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.setContentHuggingPriority(.required, for: .horizontal)
-        return button
-    }
-
-    private func makeButton(title: String, toolTip: String) -> NSButton {
-        let button = NSButton()
-        button.title = title
-        button.toolTip = toolTip
+        if isToggle { button.setButtonType(.pushOnPushOff) }
         button.bezelStyle = .recessed
         button.refusesFirstResponder = true
         button.target = self

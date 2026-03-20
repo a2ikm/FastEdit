@@ -388,25 +388,6 @@
 			};
 			name = Release;
 		};
-		AABB00090000000000000009 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = Q75439Q8C6;
-				GENERATE_INFOPLIST_FILE = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = st.aerial.FastEditTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_APPROACHABLE_CONCURRENCY = YES;
-				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastEdit.app/Contents/MacOS/FastEdit";
-			};
-			name = Debug;
-		};
 		AABB0000000000000000000A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -425,6 +406,25 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastEdit.app/Contents/MacOS/FastEdit";
 			};
 			name = Release;
+		};
+		AABB00090000000000000009 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = Q75439Q8C6;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = st.aerial.FastEditTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/FastEdit.app/Contents/MacOS/FastEdit";
+			};
+			name = Debug;
 		};
 /* End XCBuildConfiguration section */
 

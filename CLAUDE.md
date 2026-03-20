@@ -12,10 +12,11 @@ macOS 向けプレーンテキストエディタ。
 
 ## 主要クラス
 
-- `PlainTextDocument` — NSDocument サブクラス。UTF-8 テキストの読み書き、閉じる時の保存確認ダイアログ
+- `PlainTextDocument` — NSDocument サブクラス。テキストの読み書き、閉じる時の保存確認ダイアログ
 - `ViewController` — NSTextView の管理。フォント設定、行折り返し切り替え、フォントサイズ変更。FindBarDelegate として検索バーと連携
 - `FindBarViewController` — 検索・置換バーの UI とインタラクション。プログラマティックに構築（xib/storyboard 不使用）
 - `RegexSearchEngine` — NSRegularExpression のラッパー。検索・置換ロジック
+- `SelectionAdjustment` — 置換時のテキスト選択範囲調整。純粋関数として切り出し済み
 - `AppDelegate` — 起動時に Untitled ドキュメントを開く
 
 ## 設計上の注意点
@@ -39,6 +40,12 @@ macOS 向けプレーンテキストエディタ。
 
 ```
 xcodebuild -scheme FastEdit -configuration Debug build
+```
+
+## テスト
+
+```
+xcodebuild test -scheme FastEdit -destination 'platform=macOS'
 ```
 
 ## 動作確認

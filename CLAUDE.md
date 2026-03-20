@@ -13,7 +13,9 @@ macOS 向けプレーンテキストエディタ。
 ## 主要クラス
 
 - `PlainTextDocument` — NSDocument サブクラス。UTF-8 テキストの読み書き、閉じる時の保存確認ダイアログ
-- `ViewController` — NSTextView の管理。フォント設定、行折り返し切り替え、フォントサイズ変更
+- `ViewController` — NSTextView の管理。フォント設定、行折り返し切り替え、フォントサイズ変更。FindBarDelegate として検索バーと連携
+- `FindBarViewController` — 検索・置換バーの UI とインタラクション。プログラマティックに構築（xib/storyboard 不使用）
+- `RegexSearchEngine` — NSRegularExpression のラッパー。検索・置換ロジック
 - `AppDelegate` — 起動時に Untitled ドキュメントを開く
 
 ## 設計上の注意点
@@ -22,12 +24,14 @@ macOS 向けプレーンテキストエディタ。
 - **autosavesInPlace は false** — 閉じる時のカスタム保存確認ダイアログ（Save / Don't Save の2択）を実装するため無効化
 - **Storyboard の initialViewController は未設定** — ウィンドウ生成は NSDocumentController に委譲。設定するとドキュメント未紐付のウィンドウが表示される
 - **フォントは Osaka-Mono 14pt 固定**（将来的に設定画面から変更可能にする予定）
+- **検索メニューは `findAction:` セレクタ** — Storyboard の Find サブメニューは `performFindPanelAction:` ではなく `findAction:` を使用。NSTextView の標準 Find Bar と競合しないようにするため
+- **検索バーの配置** — ViewController のメインビュー上部に Find Bar を差し込み、ScrollView の top 制約を付け替える
+- **マッチハイライト** — `NSLayoutManager.addTemporaryAttribute(.backgroundColor)` で全マッチを黄色、現在マッチをオレンジで表示
 
 ## 将来の予定
 
 - フォント設定機能
 - 矩形選択・編集
-- 正規表現による検索・置換（Oniguruma）
 
 ## ビルド
 

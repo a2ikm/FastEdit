@@ -30,4 +30,4 @@ make clean      # Clean build artifacts
 
 ## License
 
-[MIT](LICENSE)
+The FastEdit source code is licensed under [CC0 1.0 Universal](LICENSE). Third-party libraries are subject to their own licenses.

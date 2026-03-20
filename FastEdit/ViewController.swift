@@ -28,6 +28,29 @@ class ViewController: NSViewController {
         textView.usesFindBar = true
     }
 
+    // MARK: - Font Size
+
+    private static let defaultFontSize: CGFloat = 14
+
+    @IBAction func makeFontBigger(_ sender: Any?) {
+        changeFontSize(by: 1)
+    }
+
+    @IBAction func makeFontSmaller(_ sender: Any?) {
+        changeFontSize(by: -1)
+    }
+
+    @IBAction func resetFontSize(_ sender: Any?) {
+        guard let currentFont = textView.font else { return }
+        textView.font = NSFont(descriptor: currentFont.fontDescriptor, size: Self.defaultFontSize)
+    }
+
+    private func changeFontSize(by delta: CGFloat) {
+        guard let currentFont = textView.font else { return }
+        let newSize = max(1, currentFont.pointSize + delta)
+        textView.font = NSFont(descriptor: currentFont.fontDescriptor, size: newSize)
+    }
+
     // MARK: - Line Wrapping
 
     @IBAction func toggleLineWrapping(_ sender: Any?) {

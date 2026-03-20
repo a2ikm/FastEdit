@@ -366,6 +366,22 @@
                                                 <action selector="toggleLineWrapping:" target="Ady-hI-5gd" id="con-wrap-001"/>
                                             </connections>
                                         </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="sep-font-001"/>
+                                        <menuItem title="Bigger" keyEquivalent="+" id="menu-font-bigger">
+                                            <connections>
+                                                <action selector="makeFontBigger:" target="Ady-hI-5gd" id="con-font-bigger"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Smaller" keyEquivalent="-" id="menu-font-smaller">
+                                            <connections>
+                                                <action selector="makeFontSmaller:" target="Ady-hI-5gd" id="con-font-smaller"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Default Size" keyEquivalent="0" id="menu-font-default">
+                                            <connections>
+                                                <action selector="resetFontSize:" target="Ady-hI-5gd" id="con-font-default"/>
+                                            </connections>
+                                        </menuItem>
                                         <menuItem title="Enter Full Screen" keyEquivalent="f" id="4J7-dP-txa">
                                             <modifierMask key="keyEquivalentModifierMask" control="YES" command="YES"/>
                                             <connections>

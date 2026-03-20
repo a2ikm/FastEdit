@@ -15,6 +15,7 @@ class PlainTextDocument: NSDocument {
         ) as! NSWindowController
         wc.window?.tabbingMode = .disallowed
         if let window = wc.window {
+            window.setFrameAutosaveName("DocumentWindow")
             Self.cascadePoint = window.cascadeTopLeft(from: Self.cascadePoint)
         }
         addWindowController(wc)

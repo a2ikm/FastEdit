@@ -26,7 +26,9 @@ macOS 向けプレーンテキストエディタ。
 - **フォントは Osaka-Mono 14pt 固定**（将来的に設定画面から変更可能にする予定）
 - **検索メニューは `findAction:` セレクタ** — Storyboard の Find サブメニューは `performFindPanelAction:` ではなく `findAction:` を使用。NSTextView の標準 Find Bar と競合しないようにするため
 - **検索バーの配置** — ViewController のメインビュー上部に Find Bar を差し込み、ScrollView の top 制約を付け替える
-- **マッチハイライト** — `NSLayoutManager.addTemporaryAttribute(.backgroundColor)` で全マッチを黄色、現在マッチをオレンジで表示
+- **マッチハイライト** — `NSLayoutManager.addTemporaryAttribute(.backgroundColor)` で全マッチを黄色、現在マッチをオレンジで表示。検索バー表示中はネイティブの選択ハイライトを無効化し、選択（半透明）・マッチ（黄）・現在の対象（オレンジ）の3層を temporary attributes で描画
+- **検索バーのモード** — Cmd+F で検索モード（検索フィールドとトグルボタンのみ）、Cmd+Option+F で置換モード（置換フィールド・Replace/All・Next/Previous ボタンが追加表示）。Esc で閉じる
+- **検索中にテキスト選択を変更しない** — 検索・置換の操作でテキストビューの選択範囲は変更しない。Next/Previous は置換モードでのみ表示され、置換対象のハイライトを移動するだけ
 
 ## 将来の予定
 

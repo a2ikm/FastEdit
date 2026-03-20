@@ -35,6 +35,8 @@ class FindBarViewController: NSViewController {
     var isReplaceMode: Bool = false {
         didSet {
             replaceRow.isHidden = !isReplaceMode
+            prevButton.isHidden = isReplaceMode
+            nextButton.isHidden = isReplaceMode
         }
     }
 
@@ -205,7 +207,7 @@ class FindBarViewController: NSViewController {
         guard !matches.isEmpty else { return }
         let index = ((currentMatchIndex ?? -1) + 1) % matches.count
         currentMatchIndex = index
-        selectMatch(at: index)
+        scrollToMatch(at: index)
         delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
     }
 
@@ -213,7 +215,7 @@ class FindBarViewController: NSViewController {
         guard !matches.isEmpty else { return }
         let index = ((currentMatchIndex ?? 1) - 1 + matches.count) % matches.count
         currentMatchIndex = index
-        selectMatch(at: index)
+        scrollToMatch(at: index)
         delegate?.findBarDidUpdateMatches(matches, currentIndex: currentMatchIndex)
     }
 
@@ -331,10 +333,9 @@ class FindBarViewController: NSViewController {
         )
     }
 
-    private func selectMatch(at index: Int) {
+    private func scrollToMatch(at index: Int) {
         guard let textView = delegate?.findBarTextView, index < matches.count else { return }
         let range = matches[index].range
-        textView.setSelectedRange(range)
         textView.scrollRangeToVisible(range)
     }
 

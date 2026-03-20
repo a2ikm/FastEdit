@@ -7,6 +7,9 @@ class ViewController: NSViewController {
     private var isLineWrapping: Bool = true
     private var findBarViewController: FindBarViewController?
     private var scrollViewTopConstraint: NSLayoutConstraint?
+    private var savedSelectedTextAttributes: [NSAttributedString.Key: Any]?
+    private var currentMatches: [NSTextCheckingResult] = []
+    private var currentHighlightIndex: Int?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -141,6 +144,10 @@ class ViewController: NSViewController {
                 scrollView.topAnchor.constraint(equalTo: findBarView.bottomAnchor),
             ])
 
+            // Disable native selection rendering; we draw it ourselves via temporary attributes
+            savedSelectedTextAttributes = textView.selectedTextAttributes
+            textView.selectedTextAttributes = [:]
+
             findBarViewController = vc
         }
 
@@ -157,6 +164,12 @@ class ViewController: NSViewController {
         guard let vc = findBarViewController else { return }
 
         clearHighlights()
+
+        // Restore original selection attributes
+        if let saved = savedSelectedTextAttributes {
+            textView.selectedTextAttributes = saved
+            savedSelectedTextAttributes = nil
+        }
 
         let findBarView = vc.view
         guard let scrollView = textView.enclosingScrollView else { return }
@@ -187,6 +200,35 @@ class ViewController: NSViewController {
         guard let layoutManager = textView.layoutManager else { return }
         let fullRange = NSRange(location: 0, length: (textView.string as NSString).length)
         layoutManager.removeTemporaryAttribute(.backgroundColor, forCharacterRange: fullRange)
+        currentMatches = []
+        currentHighlightIndex = nil
+    }
+
+    /// Applies all three highlight layers via temporary attributes.
+    /// Order (low to high priority): selection → matches → current target.
+    /// Later calls to addTemporaryAttribute overwrite earlier ones on overlapping ranges.
+    private func updateAllHighlights() {
+        guard let layoutManager = textView.layoutManager else { return }
+        let fullRange = NSRange(location: 0, length: (textView.string as NSString).length)
+        layoutManager.removeTemporaryAttribute(.backgroundColor, forCharacterRange: fullRange)
+
+        // 1. Selection (lowest priority) — semi-transparent gray
+        let selectedRange = textView.selectedRange()
+        if selectedRange.length > 0 {
+            let selectionColor = NSColor.selectedTextBackgroundColor.withAlphaComponent(0.3)
+            layoutManager.addTemporaryAttribute(.backgroundColor, value: selectionColor, forCharacterRange: selectedRange)
+        }
+
+        // 2. Matches (middle priority) — yellow
+        let matchColor = NSColor.findHighlightColor
+        for match in currentMatches {
+            layoutManager.addTemporaryAttribute(.backgroundColor, value: matchColor, forCharacterRange: match.range)
+        }
+
+        // 3. Current target (highest priority) — orange
+        if let index = currentHighlightIndex, index < currentMatches.count {
+            layoutManager.addTemporaryAttribute(.backgroundColor, value: NSColor.orange, forCharacterRange: currentMatches[index].range)
+        }
     }
 }
 
@@ -210,6 +252,12 @@ extension ViewController: NSTextViewDelegate {
         doc.updateChangeCount(.changeDone)
         findBarViewController?.performSearch()
     }
+
+    func textViewDidChangeSelection(_ notification: Notification) {
+        if findBarViewController != nil {
+            updateAllHighlights()
+        }
+    }
 }
 
 // MARK: - FindBarDelegate
@@ -222,20 +270,9 @@ extension ViewController: FindBarDelegate {
     }
 
     func findBarDidUpdateMatches(_ matches: [NSTextCheckingResult], currentIndex: Int?) {
-        guard let layoutManager = textView.layoutManager else { return }
-        let fullRange = NSRange(location: 0, length: (textView.string as NSString).length)
-        layoutManager.removeTemporaryAttribute(.backgroundColor, forCharacterRange: fullRange)
-
-        let highlightColor = NSColor.findHighlightColor
-        for (i, match) in matches.enumerated() {
-            let color: NSColor
-            if let current = currentIndex, i == current {
-                color = NSColor.orange
-            } else {
-                color = highlightColor
-            }
-            layoutManager.addTemporaryAttribute(.backgroundColor, value: color, forCharacterRange: match.range)
-        }
+        currentMatches = matches
+        currentHighlightIndex = currentIndex
+        updateAllHighlights()
     }
 
     func findBarDidReplace() {

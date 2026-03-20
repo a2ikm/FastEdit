@@ -11,6 +11,7 @@ class PlainTextDocument: NSDocument {
         let wc = storyboard.instantiateController(
             withIdentifier: "DocumentWindowController"
         ) as! NSWindowController
+        wc.window?.tabbingMode = .disallowed
         addWindowController(wc)
     }
 

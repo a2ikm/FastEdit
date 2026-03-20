@@ -10,6 +10,7 @@ class ViewController: NSViewController {
     private var savedSelectedTextAttributes: [NSAttributedString.Key: Any]?
     private var currentMatches: [NSTextCheckingResult] = []
     private var currentHighlightIndex: Int?
+    private var _suppressSearchOnTextChange = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -246,7 +247,9 @@ extension ViewController: NSTextViewDelegate {
         guard let doc = view.window?.windowController?.document as? PlainTextDocument else { return }
         doc.text = textView.string
         doc.updateChangeCount(.changeDone)
-        findBarViewController?.performSearch()
+        if !findBarSuppressSearchOnTextChange {
+            findBarViewController?.performSearch()
+        }
     }
 
     func textViewDidChangeSelection(_ notification: Notification) {
@@ -260,6 +263,10 @@ extension ViewController: NSTextViewDelegate {
 
 extension ViewController: FindBarDelegate {
     var findBarTextView: NSTextView { textView }
+    var findBarSuppressSearchOnTextChange: Bool {
+        get { _suppressSearchOnTextChange }
+        set { _suppressSearchOnTextChange = newValue }
+    }
 
     func findBarDidRequestClose() {
         hideFindBar()
@@ -269,11 +276,5 @@ extension ViewController: FindBarDelegate {
         currentMatches = matches
         currentHighlightIndex = currentIndex
         updateAllHighlights()
-    }
-
-    func findBarDidReplace() {
-        guard let doc = view.window?.windowController?.document as? PlainTextDocument else { return }
-        doc.text = textView.string
-        doc.updateChangeCount(.changeDone)
     }
 }

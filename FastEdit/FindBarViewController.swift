@@ -2,9 +2,9 @@ import AppKit
 
 protocol FindBarDelegate: AnyObject {
     var findBarTextView: NSTextView { get }
+    var findBarSuppressSearchOnTextChange: Bool { get set }
     func findBarDidRequestClose()
     func findBarDidUpdateMatches(_ matches: [NSTextCheckingResult], currentIndex: Int?)
-    func findBarDidReplace()
 }
 
 class FindBarViewController: NSViewController {
@@ -248,6 +248,12 @@ class FindBarViewController: NSViewController {
             options: options
         ) else { return }
 
+        // Suppress performSearch() in textDidChange during replacement
+        delegate?.findBarSuppressSearchOnTextChange = true
+
+        // Save selection to restore after replacement
+        let savedSelection = textView.selectedRange()
+
         // Use NSTextView's undo-aware replacement
         let matchRange = match.range
         if textView.shouldChangeText(in: matchRange, replacementString: replacement) {
@@ -255,13 +261,25 @@ class FindBarViewController: NSViewController {
             textView.didChangeText()
         }
 
+        let delta = (replacement as NSString).length - matchRange.length
+
+        // Restore selection, adjusting for the length change
+        var newSelection = savedSelection
+        if matchRange.location + matchRange.length <= savedSelection.location {
+            // Match is entirely before the selection — shift by delta
+            newSelection.location += delta
+        } else if matchRange.location < savedSelection.location + savedSelection.length {
+            // Match overlaps the selection — adjust length
+            newSelection.length = max(0, newSelection.length + delta)
+        }
+        textView.setSelectedRange(newSelection)
+
         // Adjust frozen selection range if needed
         if let frozen = frozenSelectionRange {
-            let delta = (replacement as NSString).length - matchRange.length
             frozenSelectionRange = NSRange(location: frozen.location, length: frozen.length + delta)
         }
 
-        delegate?.findBarDidReplace()
+        delegate?.findBarSuppressSearchOnTextChange = false
         performSearch()
     }
 
@@ -271,10 +289,17 @@ class FindBarViewController: NSViewController {
         let template = replaceField.stringValue
         let options = currentSearchOptions()
 
+        // Suppress performSearch() in textDidChange during batch replacement
+        delegate?.findBarSuppressSearchOnTextChange = true
+
+        // Save selection to restore after replacement
+        let savedSelection = textView.selectedRange()
+
         // Group all replacements into a single undo operation
         textView.undoManager?.beginUndoGrouping()
 
         let pattern = searchField.stringValue
+        var selectionDelta = 0
 
         // Replace in reverse order to preserve ranges
         for match in matches.reversed() {
@@ -290,11 +315,21 @@ class FindBarViewController: NSViewController {
                 textView.replaceCharacters(in: match.range, with: replacement)
                 textView.didChangeText()
             }
+
+            // Track delta for matches before the selection
+            if match.range.location + match.range.length <= savedSelection.location {
+                selectionDelta += (replacement as NSString).length - match.range.length
+            }
         }
 
         textView.undoManager?.endUndoGrouping()
 
-        delegate?.findBarDidReplace()
+        // Restore selection, adjusted for all replacements before it
+        var newSelection = savedSelection
+        newSelection.location = max(0, newSelection.location + selectionDelta)
+        textView.setSelectedRange(newSelection)
+
+        delegate?.findBarSuppressSearchOnTextChange = false
 
         // Reset scope to whole text after replace all
         if selectionToggle.state == .on {

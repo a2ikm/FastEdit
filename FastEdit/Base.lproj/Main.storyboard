@@ -159,6 +159,19 @@
                                             </connections>
                                         </menuItem>
                                         <menuItem isSeparatorItem="YES" id="uyl-h8-XO2"/>
+                                        <menuItem title="Select Column Up" id="menu-colup-001">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="selectColumnUp:" target="Ady-hI-5gd" id="con-colup-001"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem title="Select Column Down" id="menu-coldown-001">
+                                            <modifierMask key="keyEquivalentModifierMask"/>
+                                            <connections>
+                                                <action selector="selectColumnDown:" target="Ady-hI-5gd" id="con-coldown-001"/>
+                                            </connections>
+                                        </menuItem>
+                                        <menuItem isSeparatorItem="YES" id="sep-multicursor-001"/>
                                         <menuItem title="Find" id="4EN-yA-p0u">
                                             <modifierMask key="keyEquivalentModifierMask"/>
                                             <menu key="submenu" title="Find" id="1b7-l0-nxx">
@@ -440,7 +453,7 @@
                                     <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <textView importsGraphics="NO" richText="NO" allowsUndo="YES" spellingCorrection="NO" smartInsertDelete="NO" id="tv-001">
+                                        <textView importsGraphics="NO" richText="NO" allowsUndo="YES" spellingCorrection="NO" smartInsertDelete="NO" id="tv-001" customClass="EditorTextView" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>

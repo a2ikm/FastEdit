@@ -2,7 +2,7 @@ import Cocoa
 
 class ViewController: NSViewController {
 
-    @IBOutlet var textView: NSTextView!
+    @IBOutlet var textView: EditorTextView!
 
     private var isLineWrapping: Bool = true
     private var findBarViewController: FindBarViewController?

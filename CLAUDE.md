@@ -13,7 +13,8 @@ macOS 向けプレーンテキストエディタ。
 ## 主要クラス
 
 - `PlainTextDocument` — NSDocument サブクラス。テキストの読み書き、閉じる時の保存確認ダイアログ
-- `ViewController` — NSTextView の管理。フォント設定、行折り返し切り替え、フォントサイズ変更。FindBarDelegate として検索バーと連携
+- `EditorTextView` — NSTextView サブクラス。矩形選択・マルチカーソル編集を担当。詳細は [docs/multi-cursor.md](docs/multi-cursor.md) を参照
+- `ViewController` — EditorTextView の管理。フォント設定、行折り返し切り替え、フォントサイズ変更。FindBarDelegate として検索バーと連携
 - `FindBarViewController` — 検索・置換バーの UI とインタラクション。プログラマティックに構築（xib/storyboard 不使用）
 - `RegexSearchEngine` — NSRegularExpression のラッパー。検索・置換ロジック
 - `SelectionAdjustment` — 置換時のテキスト選択範囲調整。純粋関数として切り出し済み

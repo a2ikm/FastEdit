@@ -1,0 +1,70 @@
+#!/bin/bash
+# fed - Open files in FastEdit from the terminal.
+
+set -euo pipefail
+
+VERSION="1.0"
+
+# Detect app path: if running from within the app bundle, use that;
+# otherwise fall back to /Applications/FastEdit.app.
+detect_app_path() {
+    local script_path
+    script_path="$(cd "$(dirname "$0")" && pwd)"
+
+    # Check if we're inside a .app bundle (Contents/SharedSupport/bin/)
+    local app_path="${script_path%/Contents/SharedSupport/bin}"
+    if [[ "$app_path" == *.app ]] && [[ -d "$app_path" ]]; then
+        echo "$app_path"
+        return
+    fi
+
+    echo "/Applications/FastEdit.app"
+}
+
+usage() {
+    cat <<EOF
+Usage: fed [options] [file ...]
+
+Open files in FastEdit. If no files are given, FastEdit is launched.
+
+Options:
+  -h, --help      Show this help message
+  -v, --version   Show version
+EOF
+}
+
+APP_PATH="$(detect_app_path)"
+
+files=()
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+        -h|--help)
+            usage
+            exit 0
+            ;;
+        -v|--version)
+            echo "fed $VERSION"
+            exit 0
+            ;;
+        --)
+            shift
+            files+=("$@")
+            break
+            ;;
+        -*)
+            echo "fed: unknown option: $1" >&2
+            usage >&2
+            exit 1
+            ;;
+        *)
+            files+=("$1")
+            ;;
+    esac
+    shift
+done
+
+if [[ ${#files[@]} -eq 0 ]]; then
+    open -a "$APP_PATH"
+else
+    open -a "$APP_PATH" -- "${files[@]}"
+fi

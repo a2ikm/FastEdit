@@ -24,6 +24,9 @@
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		69AB596B2F6D8EBC00A979A5 /* FastEdit */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				AABB000C0000000000000012 /* PBXFileSystemSynchronizedBuildFileExceptionSet */,
+			);
 			path = FastEdit;
 			sourceTree = "<group>";
 		};
@@ -33,6 +36,16 @@
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		AABB000C0000000000000012 /* PBXFileSystemSynchronizedBuildFileExceptionSet */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				bin/fed,
+			);
+			target = 69AB59682F6D8EBC00A979A5 /* FastEdit */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFrameworksBuildPhase section */
 		69AB59662F6D8EBC00A979A5 /* Frameworks */ = {
@@ -80,6 +93,7 @@
 				69AB59652F6D8EBC00A979A5 /* Sources */,
 				69AB59662F6D8EBC00A979A5 /* Frameworks */,
 				69AB59672F6D8EBC00A979A5 /* Resources */,
+				AABB000D0000000000000013 /* Copy Command-Line Tool */,
 			);
 			buildRules = (
 			);
@@ -173,6 +187,25 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AABB000D0000000000000013 /* Copy Command-Line Tool */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/FastEdit/bin/fed",
+			);
+			name = "Copy Command-Line Tool";
+			outputPaths = (
+				"$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/Contents/SharedSupport/bin/fed",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin\"\ncp \"${SRCROOT}/FastEdit/bin/fed\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\nchmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		69AB59652F6D8EBC00A979A5 /* Sources */ = {

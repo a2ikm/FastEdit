@@ -11,6 +11,23 @@ A lightweight plain text editor for macOS.
 - Save confirmation on close
 - Window position restored across sessions
 
+## Command-Line Tool
+
+Add FastEdit to your PATH to open files from the terminal:
+
+```bash
+# Add to ~/.zshrc
+export PATH="$PATH:/Applications/FastEdit.app/Contents/SharedSupport/bin"
+```
+
+Then use `fed` to open files:
+
+```bash
+fed file.txt            # Open a file
+fed file1.txt file2.txt # Open multiple files
+fed                     # Launch FastEdit
+```
+
 ## Requirements
 
 - macOS 26.2+

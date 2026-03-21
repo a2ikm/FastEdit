@@ -45,4 +45,4 @@ xcodebuild test -scheme FastEdit -destination 'platform=macOS'
 
 ## 動作確認
 
-実装が完了して動作確認できる状態になったら `bin/xcode-run` を実行して Xcode でデバッグビルド＆実行する。
+実装が完了して動作確認できる状態になったら `bin/xcode-run` を実行して Xcode でデバッグビルド＆実行する。その上で、ユーザーに具体的な動作確認手順を提示する。

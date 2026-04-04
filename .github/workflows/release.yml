@@ -1,0 +1,45 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+jobs:
+  build:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Extract version from tag
+        id: version
+        run: echo "number=${GITHUB_REF_NAME#v}" >> "$GITHUB_OUTPUT"
+
+      - name: Build archive
+        run: |
+          xcodebuild archive \
+            -scheme FastEdit \
+            -configuration Release \
+            -archivePath "$RUNNER_TEMP/FastEdit.xcarchive" \
+            MARKETING_VERSION=${{ steps.version.outputs.number }} \
+            CURRENT_PROJECT_VERSION=${{ steps.version.outputs.number }} \
+            CODE_SIGNING_ALLOWED=NO
+
+      - name: Export app
+        run: |
+          mkdir -p "$RUNNER_TEMP/export"
+          cp -R "$RUNNER_TEMP/FastEdit.xcarchive/Products/Applications/FastEdit.app" "$RUNNER_TEMP/export/"
+
+      - name: Create zip
+        run: |
+          cd "$RUNNER_TEMP/export"
+          zip -r "$RUNNER_TEMP/FastEdit.zip" FastEdit.app
+
+      - name: Create release
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" \
+            "$RUNNER_TEMP/FastEdit.zip" \
+            --title "FastEdit $GITHUB_REF_NAME" \
+            --generate-notes

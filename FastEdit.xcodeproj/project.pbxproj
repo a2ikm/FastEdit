@@ -199,11 +199,11 @@
 			);
 			name = "Copy Command-Line Tool";
 			outputPaths = (
-				"$(BUILT_PRODUCTS_DIR)/$(PRODUCT_NAME).app/Contents/SharedSupport/bin/fed",
+				"$(TARGET_BUILD_DIR)/$(PRODUCT_NAME).app/Contents/SharedSupport/bin/fed",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "mkdir -p \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin\"\ncp \"${SRCROOT}/FastEdit/bin/fed\" \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\nchmod +x \"${BUILT_PRODUCTS_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\n";
+			shellScript = "mkdir -p \"${TARGET_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin\"\ncp \"${SRCROOT}/FastEdit/bin/fed\" \"${TARGET_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\nchmod +x \"${TARGET_BUILD_DIR}/${PRODUCT_NAME}.app/Contents/SharedSupport/bin/fed\"\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 

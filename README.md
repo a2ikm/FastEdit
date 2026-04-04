@@ -44,6 +44,7 @@ make install    # Release build + copy to /Applications
 make uninstall  # Remove from /Applications
 make test       # Run unit tests
 make clean      # Clean build artifacts
+make tag-release # Tag next version and push to trigger a GitHub release
 ```
 
 ## License
